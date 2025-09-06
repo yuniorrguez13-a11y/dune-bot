@@ -9,8 +9,16 @@
   <h1>Welcome to Dune Bot!</h1>
 
   <!-- Botpress Webchat -->
-  <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
-  <script src="https://files.bpcontent.cloud/2025/09/06/20/20250906203809-F3IDUYNX.js" defer></script>
-
+ <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
+<script src="https://files.bpcontent.cloud/2025/09/06/20/20250906203809-F3IDUYNX.js" defer></script>
+<script>
+  // Wait a bit to make sure the bot is loaded, then open it
+  window.addEventListener('load', function() {
+    if (window.botpressWebChat) {
+      window.botpressWebChat.sendEvent({ type: 'show' });
+    }
+  });
+</script>
 </body>
 </html>
+
