@@ -1,26 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dune Bot</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dune Bot — its here!</title>
+
   <style>
-    /* Enlarge the floating chat bubble */
-    #bp-web-widget {
-      transform: scale(10);
-      transform-origin: bottom right;
-      z-index: 9999;
+    /* Basic page styling */
+    body {
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #0b1020 0%, #071026 100%);
+      color: #fff;
     }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+    p.lead {
+      margin: 0 0 24px 0;
+      opacity: .85;
+      text-align: center;
+    }
+
+    /* ====== POINTER / SIGNS ====== */
+    /* Container sits to the left of the expected chat bubble.
+       pointer-events: none lets clicks pass through to the bubble. */
+    .pointer-container {
+      position: fixed;
+      bottom: 42px;       /* vertical offset (adjust if needed) */
+      right: 120px;       /* horizontal offset from the right edge */
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      z-index: 999999;
+      pointer-events: none; /* essential so the chat bubble stays clickable */
+      user-select: none;
+    }
+
+    .sign {
+      background: linear-gradient(135deg, #ffd97a 0%, #ff8a5b 100%);
+      color: #111;
+      font-weight: 800;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 8px 22px rgba(0,0,0,0.45);
+      transform-origin: right bottom;
+      transform: rotate(-10deg);
+      letter-spacing: 0.6px;
+      font-size: 15px;
+      text-shadow: 0 1px 0 rgba(255,255,255,0.15);
+      animation: bob 2000ms ease-in-out infinite;
+    }
+
+    .sign.small {
+      transform: rotate(-4deg) scale(.94);
+      font-size: 14px;
+      background: linear-gradient(135deg, #ffd4d4 0%, #ffaec9 100%);
+      animation-delay: 120ms;
+    }
+
+    .sign.tiny {
+      transform: rotate(6deg) scale(.86);
+      font-size: 13px;
+      background: linear-gradient(135deg, #cdeffd 0%, #a3e6ff 100%);
+      animation-delay: 260ms;
+    }
+
+    /* Little chevrons/arrows that slide towards the bottom-right */
+    .chevrons {
+      margin-top: 2px;
+      font-size: 20px;
+      opacity: 0.98;
+      transform: translateX(6px);
+      animation: chevronPulse 1200ms linear infinite;
+    }
+    .chevrons span { display:inline-block; margin-left: -6px; animation: slide 800ms ease-in-out infinite; }
+    .chevrons span:nth-child(1){ animation-delay: 0ms; }
+    .chevrons span:nth-child(2){ animation-delay: 120ms; }
+    .chevrons span:nth-child(3){ animation-delay: 240ms; }
+
+    /* Animations */
+    @keyframes bob {
+      0%   { transform: translateY(0) rotate(-10deg); }
+      50%  { transform: translateY(-6px) rotate(-10deg); }
+      100% { transform: translateY(0) rotate(-10deg); }
+    }
+    @keyframes slide {
+      0% { transform: translateX(0); opacity: .4; }
+      50% { transform: translateX(8px); opacity: 1; }
+      100% { transform: translateX(0); opacity: .4; }
+    }
+    @keyframes chevronPulse {
+      0% { transform: translateX(0); }
+      50% { transform: translateX(4px); }
+      100% { transform: translateX(0); }
+    }
+
+    /* Responsive: on small screens keep the arrows but move them so they don't overlap the widget */
+    @media (max-width: 700px) {
+      .pointer-container {
+        right: 84px;   /* smaller offset for phones */
+        bottom: 28px;
+        gap: 6px;
+      }
+      .sign { padding: 8px 10px; font-size: 13px; }
+      .chevrons { font-size: 16px; }
+    }
+
+    /* If you ever want to hide on tiny phones:
+    @media (max-width:420px) {
+      .pointer-container { display:none; }
+    }
+    */
   </style>
 </head>
 <body>
-  <h1>Welcome to Dune Bot!</h1>
+  <div>
+    <h1>Dune Bot</h1>
+    <p class="lead">Welcome — click the chat bubble in the lower-right. <strong>its here!</strong></p>
+  </div>
 
-  <!-- Botpress Webchat -->
+  <!-- POINTER SIGNS — these point toward the lower-right corner -->
+  <div class="pointer-container" aria-hidden="true">
+    <div class="sign">its here!</div>
+    <div class="sign small">its here!</div>
+    <div class="sign tiny">its here!</div>
+    <div class="chevrons" style="margin-top:4px;">
+      <span>👉</span><span>👉</span><span>👉</span>
+    </div>
+  </div>
+
+  <!-- ===== Botpress Webchat (already provided by you) ===== -->
   <script src="https://cdn.botpress.cloud/webchat/v3.2/inject.js"></script>
   <script src="https://files.bpcontent.cloud/2025/09/06/20/20250906203809-F3IDUYNX.js" defer></script>
 
+  <!--
+    Notes:
+    - The signs are non-interactive (pointer-events: none) so they won't block the chat bubble.
+    - If the widget's position is slightly different on your page, tweak
+        .pointer-container { bottom: 42px; right: 120px; }
+      to move the signs closer/further from the bubble.
+    - Change text by editing the <div class="sign"> elements.
+  -->
 </body>
 </html>
+
+
 
 
